@@ -1,0 +1,56 @@
+version: "3.6"
+
+services:
+  api:
+    build:
+      dockerfile: Dockerfile
+      context: .
+      target: development
+    volumes:
+      - /usr/src/app/node_modules
+      - .:/usr/src/app
+    container_name: nest_container
+    command: sh -c "npm run start:debug"
+    depends_on:
+      - postgres
+    ports:
+      - 3100:3000
+    environment:
+      APP_PORT: "3000"
+      POSTGRES_HOST: "postgres"
+      POSTGRES_PORT: "5432"
+      POSTGRES_USER: "root"
+      POSTGRES_PASSWORD: "toor"
+      POSTGRES_DATABASE: "listapp"
+      JWT_SECRET: "70279a30-f171-485b-9feb-f0dc3d369f4b"
+      JWT_EXPIRATION_TIME: "3600"
+
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_USER: "root"
+      POSTGRES_PASSWORD: "toor"
+      POSTGRES_DB: "listapp"
+      PGDATA: /data/postgres
+    volumes:
+      - ./pgadmin:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+
+  pgadmin:
+    container_name: pgadmin_container
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    ports:
+      - "${PGADMIN_PORT:-5050}:80"
+    restart: unless-stopped
+
+volumes:
+  postgres:
+  pgadmin:
