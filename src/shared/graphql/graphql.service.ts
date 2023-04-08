@@ -2,6 +2,8 @@ import { ApolloDriverConfig } from '@nestjs/apollo';
 import { Injectable, Inject } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { GqlOptionsFactory } from '@nestjs/graphql';
+import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
+import { upperDirectiveTransformer } from './directives/upper-case.directive';
 import { join } from 'path';
 
 @Injectable()
@@ -13,8 +15,10 @@ class GraphQlConfigService implements GqlOptionsFactory<ApolloDriverConfig> {
   createGqlOptions(): ApolloDriverConfig {
     return {
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
-      playground:
-        this.configService.get('NODE_ENV') === 'production' ? false : true,
+      installSubscriptionHandlers: true,
+      playground: false,
+      transformSchema: (schema) => upperDirectiveTransformer(schema, 'upper'),
+      plugins: [ApolloServerPluginLandingPageLocalDefault()],
     };
   }
 }

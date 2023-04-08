@@ -4,7 +4,10 @@ import { GraphQlConfigService } from './graphql.service';
 describe('Mocked GraphQL Config Service', () => {
   const gqlConfigMock = {
     autoSchemaFile: './schema.gql',
-    playground: true,
+    playground: false,
+    installSubscriptionHandlers: true,
+    transformSchema: jest.fn(),
+    plugins: [jest.fn()],
   };
 
   it('should have a fully mocked GraphQL Config Service', () => {
@@ -19,7 +22,10 @@ describe('Mocked GraphQL Config Service', () => {
 
     expect(serviceMock.createGqlOptions()).toMatchObject({
       autoSchemaFile: expect.any(String),
+      installSubscriptionHandlers: expect.any(Boolean),
       playground: expect.any(Boolean),
+      transformSchema: expect.any(Function),
+      plugins: expect.any(Array),
     });
   });
 });

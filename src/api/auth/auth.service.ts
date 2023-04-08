@@ -7,15 +7,19 @@ import { AuthHelper } from './auth.helper';
 
 @Injectable()
 export class AuthService {
-  @InjectRepository(User)
-  private readonly repository: Repository<User>;
+  constructor(
+    @InjectRepository(User)
+    private readonly repository: Repository<User>,
+    @Inject(AuthHelper)
+    private readonly helper: AuthHelper,
+  ) {}
 
-  @Inject(AuthHelper)
-  private readonly helper: AuthHelper;
-
-  public async register(body: RegisterDto): Promise<User | never> {
-    const { name, email, password }: RegisterDto = body;
-    let user: User = await this.repository.findOne({ where: { email } });
+  public async register({
+    name,
+    email,
+    password,
+  }: RegisterDto): Promise<User | never> {
+    let user = await this.repository.findOne({ where: { email } });
 
     if (user) {
       throw new HttpException('Conflict', HttpStatus.CONFLICT);
@@ -30,9 +34,8 @@ export class AuthService {
     return this.repository.save(user);
   }
 
-  public async login(body: LoginDto): Promise<string | never> {
-    const { email, password }: LoginDto = body;
-    const user: User = await this.repository.findOne({ where: { email } });
+  public async login({ email, password }: LoginDto): Promise<string | never> {
+    const user = await this.repository.findOne({ where: { email } });
 
     if (!user) {
       throw new HttpException('No user found', HttpStatus.NOT_FOUND);
