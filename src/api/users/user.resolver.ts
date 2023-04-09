@@ -4,9 +4,9 @@ import {
   UseInterceptors,
   Inject,
 } from '@nestjs/common';
-import { JwtAuthGuard } from '@/api/auth/auth.guard';
-import { UpdateNameDto } from './user.dto';
-import { User } from './user.entity';
+import { JwtAuthGuard } from '@api/auth/auth.guard';
+import { UpdateNameDto } from './dtos/update-user.dto';
+import { User } from './entities/user.entity';
 import { UserService } from './user.service';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { CurrentUser } from '@/shared/decorators/current-user.decorator';

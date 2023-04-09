@@ -1,13 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { UpdateNameDto } from './user.dto';
-import { User } from './user.entity';
+import { UpdateNameDto } from './dtos/update-user.dto';
+import { User } from './entities/user.entity';
 
 @Injectable()
 export class UserService {
-  @InjectRepository(User)
-  private readonly repository: Repository<User>;
+  constructor(
+    @InjectRepository(User) private readonly repository: Repository<User>,
+  ) {}
 
   public async updateName(
     body: UpdateNameDto,

@@ -5,8 +5,8 @@ import { Query, Resolver } from '@nestjs/graphql';
 export class AppResolver {
   constructor(private readonly appService: AppService) {}
 
-  @Query(() => String)
-  sayHello(): string {
-    return this.appService.getHello();
+  @Query(() => String, { name: 'health' })
+  health(): string {
+    return this.appService.getHealthStatus();
   }
 }

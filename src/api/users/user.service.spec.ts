@@ -1,10 +1,11 @@
+import { UserService } from './user.service';
 import { createMock } from '@golevelup/ts-jest';
-import { AuthService } from './auth.service';
 
 describe('UserService', () => {
-  let serviceMock: AuthService;
+  let serviceMock: UserService;
+
   beforeEach(async () => {
-    serviceMock = createMock<AuthService>();
+    serviceMock = createMock<UserService>();
   });
 
   it('should be defined', () => {

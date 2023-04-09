@@ -3,7 +3,7 @@ import { Trim } from 'class-sanitizer';
 import { IsEmail, IsOptional, IsString, MinLength } from 'class-validator';
 
 @InputType()
-export class RegisterDto {
+export class RegisterDTO {
   @Trim()
   @IsEmail()
   @Field(() => String)
@@ -21,7 +21,7 @@ export class RegisterDto {
 }
 
 @InputType()
-export class LoginDto {
+export class LoginDTO {
   @Trim()
   @IsEmail()
   @Field(() => String)
