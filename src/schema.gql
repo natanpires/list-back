@@ -51,7 +51,7 @@ type Query {
 }
 
 type Mutation {
-  updateName(updateNameInput: UpdateNameDto!): User!
+  updateName(updateNameInput: UpdateNameDTO!): User!
   register(register: RegisterDTO!): String!
   login(login: LoginDTO!): String!
   refresh: String!
@@ -62,7 +62,7 @@ type Mutation {
   removeDevice(id: String!): Device
 }
 
-input UpdateNameDto {
+input UpdateNameDTO {
   name: String
 }
 

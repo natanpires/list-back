@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { UpdateNameDto } from './dtos/update-user.dto';
+import { UpdateNameDTO } from './dtos/update-user.dto';
 import { User } from './entities/user.entity';
 
 @Injectable()
@@ -11,7 +11,7 @@ export class UserService {
   ) {}
 
   public async updateName(
-    body: UpdateNameDto,
+    body: UpdateNameDTO,
     currentUser: User,
   ): Promise<User> {
     const user: User = currentUser;
