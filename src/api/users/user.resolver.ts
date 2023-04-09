@@ -5,7 +5,7 @@ import {
   Inject,
 } from '@nestjs/common';
 import { JwtAuthGuard } from '@api/auth/auth.guard';
-import { UpdateNameDto } from './dtos/update-user.dto';
+import { UpdateNameDTO } from './dtos/update-user.dto';
 import { User } from './entities/user.entity';
 import { UserService } from './user.service';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
@@ -19,7 +19,7 @@ export class UserResolver {
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
   updateName(
-    @Args('updateNameInput') args: UpdateNameDto,
+    @Args('updateNameInput') args: UpdateNameDTO,
     @CurrentUser() currentUser: User,
   ): Promise<User> {
     return this.service.updateName(args, currentUser);

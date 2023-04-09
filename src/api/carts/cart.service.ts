@@ -8,7 +8,6 @@ import {
 
 import { Cart } from './entities/cart.entity';
 import { DeviceService } from '../devices/device.service';
-import { UserService } from '../users/user.service';
 import { CreateCartDTO } from './dtos/create-cart.dto';
 import { User } from '../users/entities/user.entity';
 
@@ -18,7 +17,6 @@ export class CartService {
     @InjectRepository(Cart)
     private readonly cartRepository: Repository<Cart>,
     private readonly deviceService: DeviceService,
-    private readonly userService: UserService,
   ) {}
 
   async create({ deviceId }: CreateCartDTO, user: User): Promise<Cart> {

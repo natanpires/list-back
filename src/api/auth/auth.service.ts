@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '@api/users/entities/user.entity';
 import { Repository } from 'typeorm';
-import { RegisterDto, LoginDto } from './dtos/auth.dto';
+import { RegisterDTO, LoginDTO } from './dtos/auth.dto';
 import { AuthHelper } from './auth.helper';
 
 @Injectable()
@@ -18,7 +18,7 @@ export class AuthService {
     name,
     email,
     password,
-  }: RegisterDto): Promise<User | never> {
+  }: RegisterDTO): Promise<User | never> {
     let user = await this.repository.findOne({ where: { email } });
 
     if (user) {
@@ -34,7 +34,7 @@ export class AuthService {
     return this.repository.save(user);
   }
 
-  public async login({ email, password }: LoginDto): Promise<string | never> {
+  public async login({ email, password }: LoginDTO): Promise<string | never> {
     const user = await this.repository.findOne({ where: { email } });
 
     if (!user) {

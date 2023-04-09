@@ -14,28 +14,89 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type Device {
+  """Device ID"""
+  id: ID!
+
+  """Device quantity"""
+  quantity: Int!
+
+  """Device name"""
+  name: String!
+
+  """Device description"""
+  description: String!
+
+  """Device price"""
+  price: String!
+}
+
+type Cart {
+  """Cart ID"""
+  id: ID!
+
+  """Device ID"""
+  device: Device!
+
+  """User ID"""
+  user: User!
+}
+
 type Query {
-  sayHello: String!
+  health: String!
+  carts: [Cart!]!
+  cart(cartId: String!): Cart!
+  devices: [Device!]!
+  device(id: String!): Device!
 }
 
 type Mutation {
   updateName(updateNameInput: UpdateNameDto!): User!
-  register(register: RegisterDto!): String!
-  login(login: LoginDto!): String!
+  register(register: RegisterDTO!): String!
+  login(login: LoginDTO!): String!
   refresh: String!
+  createCart(createCartInput: CreateCartDTO!): Cart!
+  removeCart(cartId: String!): Cart
+  createDevice(createDeviceInput: CreateDeviceDTO!): Device!
+  updateDevice(id: String!, updateDeviceInput: UpdateDeviceDTO!): Device!
+  removeDevice(id: String!): Device
 }
 
 input UpdateNameDto {
   name: String
 }
 
-input RegisterDto {
+input RegisterDTO {
   email: String!
   password: String!
   name: String
 }
 
-input LoginDto {
+input LoginDTO {
   email: String!
   password: String!
+}
+
+input CreateCartDTO {
+  """Device ID"""
+  deviceId: String!
+}
+
+input CreateDeviceDTO {
+  """Device quantity"""
+  quantity: Int!
+
+  """Device name"""
+  name: String!
+
+  """Device description"""
+  description: String!
+
+  """Device price"""
+  price: String!
+}
+
+input UpdateDeviceDTO {
+  """Device quantity"""
+  quantity: Int!
 }

@@ -2,7 +2,7 @@ import { Field, InputType } from '@nestjs/graphql';
 import { IsOptional, IsString } from 'class-validator';
 
 @InputType()
-export class UpdateNameDto {
+export class UpdateNameDTO {
   @IsString()
   @IsOptional()
   @Field(() => String, { nullable: true })
