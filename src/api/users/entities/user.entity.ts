@@ -1,6 +1,13 @@
+import { Cart } from '@api/carts/entities/cart.entity';
 import { Field, ObjectType } from '@nestjs/graphql';
 import { Exclude } from 'class-transformer';
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 @ObjectType()
@@ -20,6 +27,13 @@ export class User extends BaseEntity {
   @Column({ type: 'varchar', nullable: true })
   @Field(() => String, { nullable: true })
   public name: string | null;
+
+  @OneToMany(() => Cart, (cart) => cart.user, { cascade: true, eager: true })
+  @Field(() => [Cart], {
+    defaultValue: [],
+    nullable: true,
+  })
+  cart: Cart;
 
   @Column({ type: 'timestamp', nullable: true, default: null })
   @Field(() => Date, { nullable: true })

@@ -5,22 +5,22 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 @ObjectType()
 export class Device {
   @PrimaryGeneratedColumn('uuid')
-  @Field(() => ID, { description: 'Device ID' })
+  @Field(() => ID)
   id: string;
 
   @Column({ type: 'int', default: 0 })
-  @Field(() => Int, { defaultValue: 0, description: 'Device quantity' })
+  @Field(() => Int, { defaultValue: 0 })
   quantity: number;
 
   @Column({ type: 'varchar', length: 255, nullable: true })
-  @Field(() => String, { description: 'Device name' })
+  @Field(() => String)
   name: string;
 
   @Column({ type: 'text', nullable: true })
-  @Field(() => String, { description: 'Device description' })
+  @Field(() => String)
   description: string;
 
   @Column({ type: 'varchar', length: 50, nullable: true })
-  @Field(() => String, { description: 'Device price' })
+  @Field(() => String)
   price: string;
 }
