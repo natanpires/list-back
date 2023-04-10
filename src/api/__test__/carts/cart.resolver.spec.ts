@@ -1,30 +1,26 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { AppResolver } from './app.resolver';
-import { AppService } from './app.service';
+import { CartResolver } from '@api/carts/cart.resolver';
+import { CartService } from '@api/carts/cart.service';
 
-describe('AppResolver', () => {
-  let resolver: AppResolver;
+describe('CartResolver', () => {
+  let resolver: CartResolver;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        AppResolver,
+        CartResolver,
         {
-          provide: AppService,
+          provide: CartService,
           useFactory: () => ({
             getHealthStatus: jest.fn(() => 'OK!'),
           }),
         },
       ],
     }).compile();
-    resolver = module.get<AppResolver>(AppResolver);
+    resolver = module.get<CartResolver>(CartResolver);
   });
 
   it('should be defined', () => {
     expect(resolver).toBeDefined();
-  });
-
-  it('should return "OK!"', () => {
-    expect(resolver.health()).toBe('OK!');
   });
 });

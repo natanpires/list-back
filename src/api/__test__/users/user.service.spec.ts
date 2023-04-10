@@ -1,7 +1,7 @@
-import { UserService } from './user.service';
 import { createMock } from '@golevelup/ts-jest';
+import { UserService } from '@api/users/user.service';
 
-describe('UserService', () => {
+describe('Mocked UserService', () => {
   let serviceMock: UserService;
 
   beforeEach(async () => {
