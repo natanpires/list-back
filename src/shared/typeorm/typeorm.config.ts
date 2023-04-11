@@ -2,7 +2,7 @@ import { DataSource } from 'typeorm';
 import { ConfigService } from '@nestjs/config';
 import { config } from 'dotenv';
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
-import { getEnvPath } from '@/shared/helpers/env.helper';
+import { getEnvPath } from '../helpers/env.helper';
 
 const envFilePath = getEnvPath(`${__dirname}/../env`);
 
