@@ -11,9 +11,7 @@ describe('DeviceResolver', () => {
         DeviceResolver,
         {
           provide: DeviceService,
-          useFactory: () => ({
-            getHealthStatus: jest.fn(() => 'OK!'),
-          }),
+          useValue: {},
         },
       ],
     }).compile();

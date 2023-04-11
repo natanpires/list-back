@@ -2,7 +2,7 @@ import { ObjectType, Field, Int, ID } from '@nestjs/graphql';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-@ObjectType()
+@ObjectType({ isAbstract: true })
 export class Device {
   @PrimaryGeneratedColumn('uuid')
   @Field(() => ID)

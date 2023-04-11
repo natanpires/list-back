@@ -5,7 +5,9 @@
   "compilerOptions": {
     "deleteOutDir": true,
     "assets": [
-      "**/*.graphql"
+      "**/*.graphql",
+      "**/*.gql",
+      "shared/env/*"
     ]
   }
 }

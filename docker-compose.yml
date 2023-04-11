@@ -12,20 +12,14 @@ services:
     container_name: nest_container
     command: sh -c "npm run start:debug"
     depends_on:
-      - postgres
+      db:
+        condition: service_healthy
     ports:
       - 3100:3000
     environment:
-      APP_PORT: "3000"
-      POSTGRES_HOST: "postgres"
-      POSTGRES_PORT: "5432"
-      POSTGRES_USER: "root"
-      POSTGRES_PASSWORD: "toor"
-      POSTGRES_DATABASE: "listapp"
-      JWT_SECRET: "70279a30-f171-485b-9feb-f0dc3d369f4b"
-      JWT_EXPIRATION_TIME: "3600"
+      NODE_ENV: development
 
-  postgres:
+  db:
     image: postgres
     environment:
       POSTGRES_USER: "root"
@@ -37,6 +31,11 @@ services:
     ports:
       - "5432:5432"
     restart: unless-stopped
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   pgadmin:
     container_name: pgadmin_container
@@ -52,5 +51,4 @@ services:
     restart: unless-stopped
 
 volumes:
-  postgres:
   pgadmin:

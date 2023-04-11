@@ -15,7 +15,7 @@ lerna-debug.log*
 /pgadmin
 
 # Env
-.env
+**/*.env
 
 # OS
 .DS_Store

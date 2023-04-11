@@ -2,10 +2,13 @@ import { DataSource } from 'typeorm';
 import { ConfigService } from '@nestjs/config';
 import { config } from 'dotenv';
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
+import { getEnvPath } from '@/shared/helpers/env.helper';
 
-config();
+const envFilePath = getEnvPath(`${__dirname}/../env`);
 
-const configService = new ConfigService();
+config({ path: envFilePath });
+
+const configService = new ConfigService({ envFilePath });
 
 const typeOrmConfig: PostgresConnectionOptions = {
   type: 'postgres',

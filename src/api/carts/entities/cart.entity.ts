@@ -4,7 +4,7 @@ import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { ManyToOne, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-@ObjectType()
+@ObjectType({ isAbstract: true })
 export class Cart {
   @PrimaryGeneratedColumn('uuid')
   @Field(() => ID)

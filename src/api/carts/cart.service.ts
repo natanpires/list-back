@@ -22,7 +22,7 @@ export class CartService {
   async create({ deviceId }: CreateCartDTO, user: User): Promise<Cart> {
     const device = await this.deviceService.findOne(deviceId);
 
-    if (device.quantity === 0) {
+    if (!device.quantity) {
       throw new UnprocessableEntityException('Error adding item to cart!');
     }
 
@@ -32,7 +32,7 @@ export class CartService {
     });
 
     await this.deviceService.update(deviceId, {
-      quantity: device.quantity - 1,
+      quantity: device.quantity--,
     });
 
     return cart;
@@ -49,19 +49,26 @@ export class CartService {
       },
     });
 
-    if (!cart) throw new NotFoundException(`Cart #${id} not found`);
+    if (!cart) {
+      throw new NotFoundException(`Cart #${id} not found`);
+    }
     return cart;
   }
 
-  async remove(id: string): Promise<void> {
-    const cart = await this.findOne(id);
+  async remove(cartId: string): Promise<void> {
+    const cart = await this.findOne(cartId);
+
+    if (!cart?.device?.id) {
+      throw new UnprocessableEntityException('Error removing item from cart!');
+    }
+
     const device = await this.deviceService.findOne(cart.device.id);
 
     await Promise.all([
       this.deviceService.update(device.id, {
-        quantity: device.quantity + 1,
+        quantity: device.quantity++,
       }),
-      await this.cartRepository.remove(cart),
+      this.cartRepository.remove(cart),
     ]);
   }
 }

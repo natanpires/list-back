@@ -15,11 +15,11 @@ export class DeviceService {
 
   async create(createDeviceInput: CreateDeviceDTO): Promise<Device> {
     const device = this.deviceRepository.create(createDeviceInput);
-    return await this.deviceRepository.save(device);
+    return this.deviceRepository.save(device);
   }
 
   async findAll(): Promise<Array<Device>> {
-    return await this.deviceRepository.find();
+    return this.deviceRepository.find();
   }
 
   async update(
@@ -31,7 +31,10 @@ export class DeviceService {
       ...updateDeviceInput,
     });
 
-    if (!device) throw new NotFoundException(`Device #${id} not found`);
+    if (!device) {
+      throw new NotFoundException(`Device #${id} not found`);
+    }
+
     return this.deviceRepository.save(device);
   }
 
@@ -42,12 +45,19 @@ export class DeviceService {
       },
     });
 
-    if (!device) throw new NotFoundException(`Device #${id} not found`);
+    if (!device) {
+      throw new NotFoundException(`Device #${id} not found`);
+    }
+
     return device;
   }
 
   async remove(id: string): Promise<void> {
     const device = await this.deviceRepository.findOne({ where: { id } });
+    if (!device) {
+      throw new NotFoundException(`Device #${id} not found`);
+    }
+
     await this.deviceRepository.remove(device);
   }
 }

@@ -10,7 +10,7 @@ import {
 } from 'typeorm';
 
 @Entity()
-@ObjectType()
+@ObjectType({ isAbstract: true })
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   @Field(() => Number)

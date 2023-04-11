@@ -2,10 +2,33 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Query {
+  health: String!
+  getCarts: [Cart!]!
+  getCart(id: String!): Cart!
+  getDevices: [Device!]!
+  getDevice(id: String!): Device!
+}
+
+type Cart {
+  id: ID!
+  device: Device!
+  user: User!
+}
+
+type Device {
+  id: ID!
+  quantity: Int!
+  name: String!
+  description: String!
+  price: String!
+}
+
 type User {
   id: Float!
   email: String!
   name: String
+  cart: [Cart!]
   lastLoginAt: DateTime
 }
 
@@ -14,56 +37,31 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
-type Device {
-  """Device ID"""
-  id: ID!
-
-  """Device quantity"""
-  quantity: Int!
-
-  """Device name"""
-  name: String!
-
-  """Device description"""
-  description: String!
-
-  """Device price"""
-  price: String!
-}
-
-type Cart {
-  """Cart ID"""
-  id: ID!
-
-  """Device ID"""
-  device: Device!
-
-  """User ID"""
-  user: User!
-}
-
-type Query {
-  health: String!
-  carts: [Cart!]!
-  cart(cartId: String!): Cart!
-  devices: [Device!]!
-  device(id: String!): Device!
-}
-
 type Mutation {
   updateName(updateNameInput: UpdateNameDTO!): User!
+  updateEmail(updateEmailInput: UpdateEmailDTO!): User!
+  updatePassword(updatePasswordInput: UpdatePasswordDTO!): User!
   register(register: RegisterDTO!): String!
   login(login: LoginDTO!): String!
   refresh: String!
   createCart(createCartInput: CreateCartDTO!): Cart!
-  removeCart(cartId: String!): Cart
+  removeCart(id: String!): Cart
   createDevice(createDeviceInput: CreateDeviceDTO!): Device!
   updateDevice(id: String!, updateDeviceInput: UpdateDeviceDTO!): Device!
   removeDevice(id: String!): Device
 }
 
 input UpdateNameDTO {
-  name: String
+  name: String!
+}
+
+input UpdateEmailDTO {
+  email: String!
+}
+
+input UpdatePasswordDTO {
+  password: String!
+  passwordConfirmation: String!
 }
 
 input RegisterDTO {

@@ -11,9 +11,7 @@ describe('CartResolver', () => {
         CartResolver,
         {
           provide: CartService,
-          useFactory: () => ({
-            getHealthStatus: jest.fn(() => 'OK!'),
-          }),
+          useValue: {},
         },
       ],
     }).compile();

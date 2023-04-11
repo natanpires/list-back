@@ -7,7 +7,7 @@ import { UpdateDeviceDTO } from './dtos/update-device.dto';
 import { UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from '@api/auth/auth.guard';
 
-@Resolver(() => Device)
+@Resolver('Device')
 @UseGuards(JwtAuthGuard)
 export class DeviceResolver {
   constructor(private readonly deviceService: DeviceService) {}
@@ -17,26 +17,26 @@ export class DeviceResolver {
     return this.deviceService.create(args);
   }
 
-  @Query(() => [Device], { name: 'devices' })
+  @Query(() => [Device], { name: 'getDevices' })
   findAll() {
     return this.deviceService.findAll();
   }
 
-  @Query(() => Device, { name: 'device' })
-  findOne(@Args('id', { type: () => String }) id: string) {
-    return this.deviceService.findOne(id);
+  @Query(() => Device, { name: 'getDevice' })
+  findOne(@Args('id', { type: () => String }) deviceId: string) {
+    return this.deviceService.findOne(deviceId);
   }
 
   @Mutation(() => Device, { name: 'updateDevice' })
   updateDevice(
-    @Args('id', { type: () => String }) id: string,
+    @Args('id', { type: () => String }) deviceId: string,
     @Args('updateDeviceInput') updateDeviceInput: UpdateDeviceDTO,
   ) {
-    return this.deviceService.update(id, updateDeviceInput);
+    return this.deviceService.update(deviceId, updateDeviceInput);
   }
 
   @Mutation(() => Device, { name: 'removeDevice', nullable: true })
-  removeDevice(@Args('id', { type: () => String }) id: string) {
-    return this.deviceService.remove(id);
+  removeDevice(@Args('id', { type: () => String }) deviceId: string) {
+    return this.deviceService.remove(deviceId);
   }
 }

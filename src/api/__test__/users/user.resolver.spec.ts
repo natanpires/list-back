@@ -11,9 +11,7 @@ describe('UserResolver', () => {
         UserResolver,
         {
           provide: UserService,
-          useFactory: () => ({
-            getHealthStatus: jest.fn(() => 'OK!'),
-          }),
+          useValue: {},
         },
       ],
     }).compile();
